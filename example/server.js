@@ -7,8 +7,12 @@ const webpackHotMiddleWare = require("webpack-hot-middleware");
 const webpackDevServer = require("webpack-dev-server");
 
 // 直接使用webpackDevServer 启用服务和执更新，及分别使用dev-middleWare和hot-middleWare来启用。
+// 尝试使用两个devServer的方式。
 
+webpackDevServer.addDevServerEntrypoints(webpackConfig, {
+    publicPath: 'build',
+}); 
 
 const app = express();
-
+app.use(webpackDevServer);
 
