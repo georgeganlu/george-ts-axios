@@ -2,7 +2,7 @@
 import Axios from '../../src/index';
 
 
-axios({
+Axios({
     url: '/base/get',
     method: 'get',
     data:{
