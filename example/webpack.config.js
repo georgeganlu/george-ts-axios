@@ -1,9 +1,6 @@
 const fs = require('fs');
 const path = require("path");
 const webpack = require("webpack");
-
-
-
 // node common.js
 module.exports = { 
     // entry的入口表示法。
@@ -31,7 +28,14 @@ module.exports = {
             },
             {
                 test: /\.tsx?$/,
-                loader: 'ts-loader',
+                use:[
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true
+                        }
+                    }
+                ]
             },
             {
                 test: /\.css$/,
@@ -39,10 +43,6 @@ module.exports = {
                     'style-loader', 'css-loader'
                 ]
             },
-            // {
-            //     test: /\.styl$/,
-            //     user:
-            // }
         ]
     },
     resolve: {   // 自动解析用户引入文件的扩展，使用户引入文件时不用带这些后缀。

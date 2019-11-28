@@ -4,7 +4,7 @@ const webpack = require("webpack");
 const bodyParser = require("body-parser");
 const multipary = require("connect-multiparty");
 const webpackDevMiddleWare = require("webpack-dev-middleware");
-const webpackHotMiddleWare = require("webpack-hot-middleware");
+const webpackHotMiddleware = require('webpack-hot-middleware')
 const webpackDevServer = require("webpack-dev-server");
 // const routerFun = require("./routerFun/index");
 const path = require("path");
@@ -28,7 +28,7 @@ app.use(webpackDevMiddleWare(compiler, {
     publicPath: '/build/',
 }));
 
-app.use(webpackHotMiddleWare(compiler));
+app.use(webpackHotMiddleware(compiler));
 
 app.use(express.static(__dirname    // 静态服，也可以设置cookies;
     // , 
@@ -57,8 +57,8 @@ app.use(router);
 
 const port = process.env.PORT || 9800;
 
-module.exports = app.listen(port, '192.168.56.1', () => {
-    console.log(`Server listening on http://192.168.56.1:${port}`);
+module.exports = app.listen(port, '172.19.23.127', () => {
+    console.log(`Server listening on http://172.19.23.127:${port}`);
 });
 
 
