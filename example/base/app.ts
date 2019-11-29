@@ -7,6 +7,7 @@ let params1 = qs.stringify({
     b: '2',
 })
 
+
 Axios({
     url: `/base/get?${params1}`,
     method: 'get',    
