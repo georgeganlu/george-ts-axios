@@ -1,6 +1,6 @@
 // 采用url-encode的方式来处理url的方式。
 
-import { isDate, isObject } from './util'
+import { isDate, isObject , encode} from './util'
 
 export function bindURL(url: string, params?: any): string {
   // 对url的处理方式的形式。 其实以前是qs做的工作。 现在学造轮子。
@@ -32,10 +32,23 @@ export function bindURL(url: string, params?: any): string {
       // 看values里面的值有没有 Data类型的 or 不为null and undefeind;
       if (isDate(val)) {
         val = val.toISOString()
-      } else {
+      } else if (isObject(val)) {
+          val = JSON.stringify(val);
       }
-    })
-  })
+    //  解析了val是日期及 对象obj array 之后, 其它的类型就直接给定相应的 值类型。
+      parts.push(`${encode(key)}=${encode(val)}`);
+    });
 
-  return ''
+    let serializedParams = parts.join("&");
+    if (serializedParams) {
+        // 看url中是否包含hash。如果有是丢弃hash的。
+        let hashIndex = url.indexOf("#");
+        if (hashIndex > -1) {
+            url = url.slice(0, hashIndex);  // 把hash后面的丢弃。
+        }
+        let includeMark =  url.indexOf("?") > - 1 ? '' : '?';
+        url += includeMark;
+    }    
+  });
+  return url;
 }

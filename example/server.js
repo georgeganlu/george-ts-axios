@@ -6,7 +6,7 @@ const multipary = require("connect-multiparty");
 const webpackDevMiddleWare = require("webpack-dev-middleware");
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const webpackDevServer = require("webpack-dev-server");
-// const routerFun = require("./routerFun/index");
+const routerFun = require("./routerFun/index");
 const os = require('os');
 const path = require("path");
 const app = express();
@@ -49,11 +49,11 @@ app.use(multipary({  // 文件上传中间
 
 const router = express.Router();
 
-// routerFun(router);  // 注册所有的router路由方法。
+routerFun(router);  // 注册所有的router路由方法。
 // 第一个的注册方法。
-router.get('/base/get', function(req, res) {
-    res.json(req.query);
-});
+// router.get('/base/get', function(req, res) {
+//     res.json(req.query);
+// });
 
 app.use(router);
 
