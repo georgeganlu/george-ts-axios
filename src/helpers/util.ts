@@ -7,12 +7,16 @@ export function isDate(data: any): data is Date {
 
 export function isObject(val: any): val is Object {
   // 这里判断只要不是null 及unde
-  return val !== null && typeof val === 'object';
+  return val !== null && typeof val === 'object'
 }
 
+export function isPlainObject(data: any): any {
+  // body里面的话，主要是对对象进行序列化。
+  return toString.call(data) === '[object Object]'
+}
 
 export function encode(str: string): string {
-    return encodeURIComponent(str)
+  return encodeURIComponent(str)
     .replace(/%40/g, '@')
     .replace(/%3A/gi, ':')
     .replace(/%24/g, '$')
