@@ -7,7 +7,11 @@ export function normalizeHeaders(headers: any, paramsName: string) : void{
     }
 
     Object.keys(headers).forEach(attr => {
-         
+         let attrVal = headers[attr];
+         if (attr && attr.toUpperCase() === paramsName.toUpperCase()) {
+             headers[paramsName] = attrVal;
+             delete headers[attr];
+         }
     });
 }
 
