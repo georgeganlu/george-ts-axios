@@ -1,14 +1,18 @@
-import { AxiosRequestConfig } from './types'
+import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './types'
 import { bindURL } from './helpers/url'
 import { isPlainObject } from './helpers/util'
 import { processHeaders } from './helpers/headers';
 
 import xhr from './xhr'
 
-export default function axios(config: AxiosRequestConfig): void {
+export default function axios(config: AxiosRequestConfig): AxiosPromise {
   // todo
   processConfig(config)
-  xhr(config)
+  return xhr(config).then(res => {
+    // 在这里进行data的处理。
+      res.data = transformResponseData(res.data);      
+      return res;
+  });
 }
 
 export function processConfig(config: AxiosRequestConfig): void {
@@ -34,4 +38,14 @@ export function transformRequestData(config: AxiosRequestConfig): any {
     return JSON.stringify(config.data)
   }
   return config.data
+}
+
+
+export function transformResponseData(data: string): any {
+    try {
+        return JSON.parse(data);
+    } catch(err) {
+        // console.log(err);
+    }
+    return data;
 }

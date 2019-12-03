@@ -12,7 +12,6 @@ module.exports = function base(router) {
     router.post('/base/buffer', function(req, res) {
          let msg = [];
          req.on('data',(chunk) => {
-            //  console.log(chunk.toString(), "chunk+++++++++++")
              if (chunk) {
                  msg.push(chunk);
              }
