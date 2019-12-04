@@ -1,15 +1,20 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './types'
 import { parseHeaders } from './helpers/util';
+import  createError from './helpers/error';
+
 export default function xhr(config: AxiosRequestConfig):AxiosPromise  {
     // xhr发送请求的三个步骤。
 
     return new Promise((succ, fail) => {
-        let { url, data = null, method = 'get', headers = {}, responseType } = config;
+        let { url, data = null, method = 'get', headers = {}, responseType, timeout } = config;
 
         let req = new XMLHttpRequest();
 
         if (responseType) {
             req.responseType = responseType;
+        }
+        if (timeout) {
+            req.timeout = timeout;
         }
 
         req.open(method, url, true) // 发送请求默认使用异步的方式。
@@ -19,6 +24,8 @@ export default function xhr(config: AxiosRequestConfig):AxiosPromise  {
                 return
             }
 
+            // 响应的状态码在 200- 300之间。
+            
             // 之后的话，取出接口定义的数据结构。  data  status statusText  headers config request;
             const responeseHeaders = req.getAllResponseHeaders();
             const responseData = responseType === 'text' ? req.responseText : req.response;
@@ -30,9 +37,24 @@ export default function xhr(config: AxiosRequestConfig):AxiosPromise  {
                 config,
                 request: req,
             }
-            succ(resultData);
+            // 处理响应的参数.
+            handleResponse(resultData);
+
         }
 
+        req.onerror = function () {
+            fail(createError('Network Error', config, null, req));
+        }
+
+        req.ontimeout = function () {
+            // fail(new Error("请求超时"));
+            fail(createError(`Timeout of ${timeout}`, config, 'ECONNABORTED', req));
+        }
+
+        // 如果要扑捉错误的话，一般错误分成3种。  1种网络请求本身出错，1种超时出错，1种返回状态码不在 200-300之间的出错  总共出错的类型是3种;
+
+
+        // 发送内容前
         Object.keys(headers).forEach(name => {
             // 这里是设置headers的内容，当data数据为空时，content-type就没有设置的必要了，但是其它headers里面的内容是需要的。
             if (data === null && name.toLowerCase() === 'content-type') {  // 对这个字段一定是同时满足
@@ -41,6 +63,19 @@ export default function xhr(config: AxiosRequestConfig):AxiosPromise  {
                 req.setRequestHeader(name, headers[name]);
             }
         });
-        req.send(data)
+        req.send(data);
+
+
+        // 处理handle响应.
+        function handleResponse(response: AxiosResponse) {
+            if (response.status >= 200 && response.status < 300) {
+                succ(response);
+            } else {             
+                let message = response.data.message || `Request failed with status code ${response.status}`;   
+                fail(createError(message, config, null, req, response));
+            }
+        }
     })
 }
+
+

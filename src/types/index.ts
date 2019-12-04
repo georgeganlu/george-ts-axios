@@ -12,7 +12,7 @@ export interface AxiosRequestConfig {
     data?:any;
     params?: any;
     responseType?: XMLHttpRequestResponseType;  // 设置响应的数据类型。
-    [propName: string] : any;   // 加上索引签名
+    timeout?: number,
 }
 
 
@@ -34,4 +34,14 @@ export interface AxiosPromise extends Promise<AxiosResponse> {   // 定义一个
 
 }
 
-// 上面实现类型接口的定义。
+export interface  AxiosError extends Error {
+    // 错误类型应有的字段
+    isAxiosError: boolean
+    config: AxiosRequestConfig,
+    code?: string | null
+    request?: any
+    response?:AxiosResponse
+}
+
+
+// 这里的types全部是类型结构定义。 可以通过index.ts导出对外的。
