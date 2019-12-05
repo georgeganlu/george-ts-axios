@@ -1,13 +1,13 @@
-import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './types'
-import { parseHeaders } from './helpers/util';
-import  createError from './helpers/error';
+import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from '../types'
+import { parseHeaders } from '../helpers/util';
+import  createError from '../helpers/error';
 
 export default function xhr(config: AxiosRequestConfig):AxiosPromise  {
     // xhr发送请求的三个步骤。
 
     return new Promise((succ, fail) => {
         let { url, data = null, method = 'get', headers = {}, responseType, timeout } = config;
-
+    
         let req = new XMLHttpRequest();
 
         if (responseType) {
@@ -17,7 +17,7 @@ export default function xhr(config: AxiosRequestConfig):AxiosPromise  {
             req.timeout = timeout;
         }
 
-        req.open(method, url, true) // 发送请求默认使用异步的方式。
+        req.open(method.toUpperCase(), url!, true) // 发送请求默认使用异步的方式。
 
         req.onreadystatechange = function () {
             if (req.readyState !== 4) {   // readyState会连续进行触发直到为 4为止。 这里先不考虑错误。

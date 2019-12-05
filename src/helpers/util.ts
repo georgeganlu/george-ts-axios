@@ -48,3 +48,12 @@ export function parseHeaders(header: string) : any {
     });
     return head;
 } 
+
+
+// 混合对象的实现 to from   --- 使用交叉类型。
+export function extend<T, U>(to:T, from: U): T & U {
+    for(const k in from) {
+        (to as T & U)[k] = from[k] as any
+    }
+    return to as T & U;
+}

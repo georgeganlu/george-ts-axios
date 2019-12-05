@@ -21,7 +21,7 @@ export function processHeaders(headers: any, data: any): any {
 
     if (isPlainObject(data)) {
         if (headers && !headers['Content-Type']) {  // 这里是且headers[content-type] 为空的时候。  就是表明这里传入的参数是object data的时候
-            headers['Content-type'] = 'application/json; charset=UTF-8';   
+            headers['Content-Type'] = 'application/json; charset=UTF-8';   
         }
     }
     return headers;
