@@ -31,5 +31,4 @@ import axios, { AxiosRequestConfig, AxiosResponse } from '../../src/index';
 // axios.patch('/extend/patch', { msg: 'patch' })
 
 
-
 // 定义返回的数据类型 -- 是泛型类型的。
