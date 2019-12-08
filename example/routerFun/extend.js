@@ -33,5 +33,17 @@ module.exports = function (router) {
         res.json(req.body);
     });
 
+    router.get("/somepath", function(req, res) {
+        res.json({
+            code: 0,
+            message: 'ok',
+            result: {
+              name: 'jack',
+              age: 18
+            }
+          })
+    });
+
+
     // 测试推送 ----
 }
