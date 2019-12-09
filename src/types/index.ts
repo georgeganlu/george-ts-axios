@@ -87,15 +87,15 @@ export interface AxiosInstance extends Axios {
 // 现在只是定义了接口，对外暴露接口，也就是这个函数的定义。
 
 export interface AxiosInterceptorManager<T> {
-  use(resolve: resolveFn<T>, reject: rejectFn): number
+  use(resolve: ResolveFn<T>, reject: RejectFn): number
 
   eject(val: number): void // eject要做的事只是删除对应的拦截器。
 }
 
-export interface resolveFn<T> {
+export interface ResolveFn<T> {
   (val: T): T | Promise<T> // resolveFn函数应该是一个泛型的，因为在request请求时resolve(res)  里的res是一个AxiosRequestConfig   但到了response时 这里的res是一个AxiosResponseData类型的数据。
 }
 
-export interface rejectFn {
+export interface RejectFn {
   (error: any): any // 正常作为promise的error的话，是可返回，也可以不返回数据相关的内容的。
 }

@@ -1,8 +1,8 @@
-import { resolveFn, rejectFn } from '../types'
+import { ResolveFn, RejectFn } from '../types'
 
 export interface interceptor<T> {
-  resolve: resolveFn<T>
-  reject?: rejectFn
+  resolve: ResolveFn<T>
+  reject?: RejectFn
 }
 
 export default class InterCeptorManager<T> {
@@ -14,7 +14,7 @@ export default class InterCeptorManager<T> {
     this.interceptors = [] // 给初始化的值。
   }
   // 添加拦截器的方法。
-  use(resolve: resolveFn<T>, reject?: rejectFn): number {
+  use(resolve: ResolveFn<T>, reject?: RejectFn): number {
     this.interceptors.push({
       resolve,
       reject
