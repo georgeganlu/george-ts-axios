@@ -1,8 +1,8 @@
 import { ResolveFn, RejectFn } from '../types'
 
 export interface interceptor<T> {
-  resolve: ResolveFn<T>
-  reject?: RejectFn
+  resolved: ResolveFn<T>
+  rejected?: RejectFn
 }
 
 export default class InterCeptorManager<T> {
@@ -14,10 +14,10 @@ export default class InterCeptorManager<T> {
     this.interceptors = [] // 给初始化的值。
   }
   // 添加拦截器的方法。
-  use(resolve: ResolveFn<T>, reject?: RejectFn): number {
+  use(resolved: ResolveFn<T>, rejected?: RejectFn): number {
     this.interceptors.push({
-      resolve,
-      reject
+      resolved,
+      rejected
     })
     return this.interceptors.length - 1 // 对创建的实例新添加方法。
   }
@@ -32,6 +32,7 @@ export default class InterCeptorManager<T> {
   forEach(fn: (interceptor: interceptor<T>) => void) {
     this.interceptors.forEach(interceptor => {
       if (interceptor !== null) {
+        // 这里设置了拦截器的不为空。
         fn(interceptor)
       }
     })
