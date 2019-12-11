@@ -1,6 +1,6 @@
 import { ResolveFn, RejectFn } from '../types'
 
-export interface interceptor<T> {
+export interface Interceptor<T> {
   resolved: ResolveFn<T>
   rejected?: RejectFn
 }
@@ -8,7 +8,7 @@ export interface interceptor<T> {
 export default class InterCeptorManager<T> {
   // 这个拦截器有一个用来装拦截器的队列属性，并且这个属性是一个私有的数组。
 
-  private interceptors: Array<interceptor<T> | null> // 声明了一个私有的队列 数构结构是 加入的use里面的拦截器函数。 把每一个新加入的拦截器方法，以一个对象数据的方法推入队列。
+  private interceptors: Array<Interceptor<T> | null> // 声明了一个私有的队列 数构结构是 加入的use里面的拦截器函数。 把每一个新加入的拦截器方法，以一个对象数据的方法推入队列。
 
   constructor() {
     this.interceptors = [] // 给初始化的值。
@@ -29,7 +29,7 @@ export default class InterCeptorManager<T> {
     }
   }
 
-  forEach(fn: (interceptor: interceptor<T>) => void) {
+  forEach(fn: (interceptor: Interceptor<T>) => void) {
     this.interceptors.forEach(interceptor => {
       if (interceptor !== null) {
         // 这里设置了拦截器的不为空。
