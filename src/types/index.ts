@@ -73,6 +73,11 @@ export interface Axios {
 
 // 实例本身就是一个方法   使用<T = any> 代表这个类型变量可以是任何一种类型，或都不传类型也可以，不然就必须传入一个类型。
 export interface AxiosInstance extends Axios {
+  interceptors: {
+    request: AxiosInterceptorManager<AxiosRequestConfig>
+    response: AxiosInterceptorManager<AxiosResponse>
+  }
+
   <T = any>(config: AxiosRequestConfig): AxiosPromise<T> // axios主方法 这个主方法可以不传入
 
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T> // axios方法重载。
@@ -87,7 +92,7 @@ export interface AxiosInstance extends Axios {
 // 现在只是定义了接口，对外暴露接口，也就是这个函数的定义。
 
 export interface AxiosInterceptorManager<T> {
-  use(resolve: ResolveFn<T>, reject: RejectFn): number
+  use(resolve: ResolveFn<T>, reject?: RejectFn): number
 
   eject(val: number): void // eject要做的事只是删除对应的拦截器。
 }

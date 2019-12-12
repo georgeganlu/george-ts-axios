@@ -44,6 +44,10 @@ module.exports = function (router) {
           })
     });
 
+    router.get('/interceptor/get', function(req, res) {
+        res.send('hello'); 
+    });
+
 
     // 测试推送 ----
 }

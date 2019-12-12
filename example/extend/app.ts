@@ -1,37 +1,78 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from '../../src/index';
 
+axios.interceptors.request.use(config => {
+    config.headers.test += '1';
+    return config;
+})
 
-interface ResponseData<T = any> {
-    code: number
+axios.interceptors.request.use(config => {
+    config.headers.test += '2';
+    return config;
+})
 
-    result: T  // 也就是说这个T 是一个User的类型。
+axios.interceptors.request.use(config => {
+    config.headers.test += '3';
+    return config;
+})
 
-    message: string
-}
+axios.interceptors.response.use(res => {
+    res.data += '1';
+    return res;
+});
+
+let interceptor = axios.interceptors.response.use(res => {
+    res.data += '2';
+    return res;
+});
+
+axios.interceptors.response.use(res => {
+    res.data += '3';
+    return res;
+});
+
+axios.interceptors.response.eject(interceptor);
 
 
-function getUser<T>() {
-    return axios.get<ResponseData<T>>('/somepath')
-        .then(res => {
-            console.log(res, "+++++++++++++++++++++++++++");
-            return res.data;
-        })
-        .catch(err => console.log(err));
-}
+axios({
+    url: '/interceptor/get',
+    method: 'get',
+    headers: {
+      test: ''
+    }
+  }).then((res) => {
+    console.log(res.data)
+  })
 
 
-interface User {
-    name: string
-    age: number
-}
+// interface ResponseData<T = any> {
+//     code: number
+//     result: T  // 也就是说这个T 是一个User的类型。
+//     message: string
+// }
 
 
-async function test() {
-    const user = await getUser<User>();
-    console.log(user.result.name);
-}
+// function getUser<T>() {
+//     return axios.get<ResponseData<T>>('/somepath')
+//         .then(res => {
+//             console.log(res, "+++++++++++++++++++++++++++");
+//             return res.data;
+//         })
+//         .catch(err => console.log(err));
+// }
 
-test();
+
+// interface User {
+//     name: string
+//     age: number
+// }
+
+
+// async function test() {
+//     const user = await getUser<User>();
+//     console.log(user.result.name);
+// }
+
+// test();
 
 
 
