@@ -77,6 +77,7 @@ export interface AxiosInstance extends Axios {
     request: AxiosInterceptorManager<AxiosRequestConfig>
     response: AxiosInterceptorManager<AxiosResponse>
   }
+  defaults: AxiosRequestConfig   // 在类的实现上申明了这个字段，so在接口数据定义上也要定义这个字段
 
   <T = any>(config: AxiosRequestConfig): AxiosPromise<T> // axios主方法 这个主方法可以不传入
 

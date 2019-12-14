@@ -21,12 +21,14 @@ interface PromiseChain<T> {
 export default class Axios {
   // request是发送请求的方法，也是把这个函数混合对象当成一个对象本身。
   interceptors: Interceptors // 定义了一个属性，并且这个属性是 Interceptors类型的。
+  defaults: AxiosRequestConfig
 
-  constructor() {
+  constructor(initConfig: AxiosRequestConfig) {
     this.interceptors = {
       request: new InterCeptorManager<AxiosRequestConfig>(),
       response: new InterCeptorManager<AxiosResponse>()
     }
+    this.defaults = initConfig;
   }
 
   request(url: any, config?: any): AxiosPromise {
