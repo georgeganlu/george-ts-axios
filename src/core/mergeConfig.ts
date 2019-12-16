@@ -15,7 +15,8 @@ export default function mergeConfig(config1:AxiosRequestConfig, config2?: AxiosR
     const config = Object.create(null);  // any对象。
 
     for(let key in config1) {
-        config[key] = 
+        
+        config[key] = mergeField(key);
     }
 
 
