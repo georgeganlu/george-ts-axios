@@ -23,6 +23,7 @@ export interface AxiosRequestConfig {
   params?: any
   responseType?: XMLHttpRequestResponseType // 设置响应的数据类型。
   timeout?: number
+  [propName: string]: any
 }
 
 // 现在定义返回的配置参数 作promise的链式调用，可以拿到服务端返回的数据data，http status 状态消息 statusText 响应头headers 请求配置对象config的参数。
