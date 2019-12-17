@@ -2,6 +2,7 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse, ResolveFn, RejectFn } from '../types'
 import dispatch from './dispatch'
 import InterCeptorManager from './InterceptorManager'
+import mergeConfig from './mergeConfig'
 
 interface Interceptors {
   request: InterCeptorManager<AxiosRequestConfig>
@@ -28,7 +29,7 @@ export default class Axios {
       request: new InterCeptorManager<AxiosRequestConfig>(),
       response: new InterCeptorManager<AxiosResponse>()
     }
-    this.defaults = initConfig;
+    this.defaults = initConfig
   }
 
   request(url: any, config?: any): AxiosPromise {
@@ -42,6 +43,9 @@ export default class Axios {
       config = url
     }
 
+    // 在这里需要把合并的一个默认的配置和 用户设置的config.
+    config = mergeConfig(this.defaults, config)
+
     // 要实现链式调用的话，需要形成promise的链来支持链式的调用 --- 在设计图的链式调用中有 先执行request拦截器，在执行response拦截器。
     // 先定义一个初始的链。
     // 链里面是一堆拦截器，及请求的初始值。 dispatch在此时是还没有发送请求的。
@@ -53,13 +57,6 @@ export default class Axios {
         rejected: undefined
       }
     ]
-
-    // const chain: PromiseChain<any>[] = [
-    //   {
-    //     resolved: dispatch,
-    //     rejected: undefined
-    //   }
-    // ]
 
     // 接下来是把拦截器，加入 promiseChain的链中去。
 

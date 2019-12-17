@@ -1,6 +1,6 @@
 // 合并的方法的策略。
 import { AxiosRequestConfig } from '../types'
-import { isPlainObject } from '../helpers/util'
+import { isPlainObject, deepMerge } from '../helpers/util'
 
 const starts = Object.create(null)
 
@@ -17,15 +17,15 @@ function fromVal2Strat(val1: any, val2: any) {
   }
 }
 
-// 两者进行合并的策略,
+// 两者进行合并的策略 -- deepMergeStrat这个只是初步的合并，还要实现深拷贝的方法。
 function deepMergeStrat(val1: any, val2: any): any {
   if (isPlainObject(val2)) {
-    return deepMergeStrat(val1, val2)
+    return deepMerge(val1, val2)
   } else if (typeof val2 !== 'undefined') {
     // 如果是判断 val2为真的话，这里是有相应的风险的，也许用户传入的值就是 false,这里就出问题了 , 用类型来判断的话，只要不是undefined
     return val2
   } else if (isPlainObject(val1)) {
-    return deepMergeStrat(val1, undefined)
+    return deepMerge(val1)
   } else if (typeof val1 !== 'undefined') {
     return val1
   }
