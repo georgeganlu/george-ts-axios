@@ -70,11 +70,12 @@ export function deepMerge(...obj: Array<any>): any {
         if (isPlainObject(val)) {
           // 这里要加一层的判断，因为这个和完全的深拷贝有一点不同，不同obj里的相同字段的值，这里我们都需要保留
           if (isPlainObject(result[key])) {
+              result[key] = deepMerge(result[key], val);  // 正常情况下只有header的是defaultConfig 对用户config进行补充。
           } else {
             result[key] = deepMerge(val) // 这一步的递归已经把result[key] 变成了一个对象了。  // 在deepMergeStrat
           }
         } else {
-          result[key] = val
+          result[key] = val;   // 这里对于同一种key的 value为值类型的 key字段只会有一个，因为总共合并的对象就 defaultConfig + config
         }
       }
     })
