@@ -1,5 +1,5 @@
-import {isObject, isPlainObject} from "./util";
-
+import {isObject, isPlainObject, deepMerge} from "./util";
+import { Method } from '../types'
 
 export function normalizeHeaders(headers: any, paramsName: string) : void{
     if (!headers) {
@@ -24,5 +24,24 @@ export function processHeaders(headers: any, data: any): any {
             headers['Content-Type'] = 'application/json; charset=UTF-8';   
         }
     }
+    return headers;
+}
+
+
+export function deepMergeHeader(headers: any, method: Method): any {
+    if (!headers) {
+        return headers;
+    }
+
+    headers = deepMerge(headers.common, headers[method], headers);   // deepMerge就是用一个对象缓存所有的属性。 形成一个对象。
+    // 输入headers[method] 的目的是为了把这个属性提取出来。
+    
+    // 接下来要删除之前输入的默认的属性。
+    const defaultsProps = ['get', 'post', 'put', 'delete', 'head', 'options', 'patch', 'common'];
+
+    defaultsProps.forEach(prop => {
+        delete headers[prop];
+    });
+
     return headers;
 }

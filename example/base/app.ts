@@ -1,6 +1,7 @@
 
 import axios from '../../src/index';
-const qs = require("qs");
+import qs from 'qs'
+
 
 // let params1 = qs.stringify({
 //     a: '1',

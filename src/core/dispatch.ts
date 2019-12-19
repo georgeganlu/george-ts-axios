@@ -18,9 +18,10 @@ export default function axios(config: AxiosRequestConfig): AxiosPromise {
 export function processConfig(config: AxiosRequestConfig): void {
   config.url = transformUrl(config);  // 处理了url + params参数的  
 // 处理data之前要处理完header的内容。 -- 处理data会导致整个data的数据改变。
+  debugger;
   config.headers = transfromHeaders(config);
   config.data = transformRequestData(config);  // 这里处理data + 处理data的同时要处理headers的内容。
-
+  
 }
 
 export function transformUrl(config: AxiosRequestConfig): string {

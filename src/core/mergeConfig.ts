@@ -40,7 +40,7 @@ stratKeysFromVal2.forEach(key => {
 const stratKeyDeepMerge = ['headers']
 stratKeyDeepMerge.forEach(key => {
   starts[key] = deepMergeStrat // 深合并的策略
-})
+});
 
 // 不同的值有不同的合并策略。
 export default function mergeConfig(
@@ -64,7 +64,7 @@ export default function mergeConfig(
 
   for (let key in config2) {
     //
-    mergeField(key)
+    mergeField(key)  
   }
 
   function mergeField(key: string): void {
