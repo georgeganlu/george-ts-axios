@@ -44,11 +44,10 @@ export default class Axios {
     }
 
     // 在这里需要把合并的一个默认的配置和 用户设置的config.
-    config = mergeConfig(this.defaults, config); // 这里是处理好最基本的config了，应该是
+    config = mergeConfig(this.defaults, config) // 这里是处理好最基本的config了，应该是
+    debugger
 
     // 这里的config是深度合并后的对象。config展开的话，只有header是一个对象了。 在需要对header 作一个深层的遍历，把每一个字段提取出来。
-
-
 
     // 要实现链式调用的话，需要形成promise的链来支持链式的调用 --- 在设计图的链式调用中有 先执行request拦截器，在执行response拦截器。
     // 先定义一个初始的链。

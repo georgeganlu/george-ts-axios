@@ -62,20 +62,27 @@ export function deepMerge(...obj: Array<any>): any {
   let result = Object.create(null) //
 
   // 递归进行合并。
+
   obj.forEach(item => {
     Object.keys(item).forEach(key => {
       let val = item[key]
+
       if (typeof val !== 'undefined') {
         // 这里的val还要分成几种情况     --- 在这里 数组对象里面的 各个obj 是可能有重复的key的。
         if (isPlainObject(val)) {
           // 这里要加一层的判断，因为这个和完全的深拷贝有一点不同，不同obj里的相同字段的值，这里我们都需要保留
           if (isPlainObject(result[key])) {
-              result[key] = deepMerge(result[key], val);  // 正常情况下只有header的是defaultConfig 对用户config进行补充。
+            result[key] = deepMerge(result[key], val) // 正常情况下只有header的是defaultConfig 对用户config进行补充。
           } else {
             result[key] = deepMerge(val) // 这一步的递归已经把result[key] 变成了一个对象了。  // 在deepMergeStrat
           }
         } else {
-          result[key] = val;   // 这里对于同一种key的 value为值类型的 key字段只会有一个，因为总共合并的对象就 defaultConfig + config
+          // 看下 key是否是Content-type的情况。
+          if (key === 'Content-Type') {
+            console.log('测试++++++++++++++++++++++++')
+          }
+
+          result[key] = val // 这里对于同一种key的 value为值类型的 key字段只会有一个，因为总共合并的对象就 defaultConfig + config
         }
       }
     })

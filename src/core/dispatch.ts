@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from '../types'
 import { bindURL } from '../helpers/url'
-import { isPlainObject } from '../helpers/util'
-import { processHeaders } from '../helpers/headers';
+import { isPlainObject, deepMerge } from '../helpers/util'
+import { processHeaders, deepMergeHeader } from '../helpers/headers'
 
 import xhr from './xhr'
 
@@ -10,18 +10,17 @@ export default function axios(config: AxiosRequestConfig): AxiosPromise {
   processConfig(config)
   return xhr(config).then(res => {
     // 在这里进行data的处理。
-      res.data = transformResponseData(res.data);      
-      return res;
-  });
+    res.data = transformResponseData(res.data)
+    return res
+  })
 }
 
 export function processConfig(config: AxiosRequestConfig): void {
-  config.url = transformUrl(config);  // 处理了url + params参数的  
-// 处理data之前要处理完header的内容。 -- 处理data会导致整个data的数据改变。
-  debugger;
-  config.headers = transfromHeaders(config);
-  config.data = transformRequestData(config);  // 这里处理data + 处理data的同时要处理headers的内容。
-  
+  config.url = transformUrl(config) // 处理了url + params参数的
+  // 处理data之前要处理完header的内容。 -- 处理data会导致整个data的数据改变。
+  config.headers = transfromHeaders(config)
+  config.data = transformRequestData(config) // 这里处理data + 处理data的同时要处理headers的内容。
+  config.headers = deepMergeHeader(config.headers, config.method!)
 }
 
 export function transformUrl(config: AxiosRequestConfig): string {
@@ -30,8 +29,8 @@ export function transformUrl(config: AxiosRequestConfig): string {
 }
 
 export function transfromHeaders(config: AxiosRequestConfig): any {
-    let { headers = {}, data } = config;  // 对这里来说这个configheaders和data都可能没有传值，也就是undefined;  // 如果headers没有传的也可以根据data的数据格式来进行转换。
-    return processHeaders(headers, data);
+  let { headers = {}, data } = config // 对这里来说这个configheaders和data都可能没有传值，也就是undefined;  // 如果headers没有传的也可以根据data的数据格式来进行转换。
+  return processHeaders(headers, data)
 }
 
 export function transformRequestData(config: AxiosRequestConfig): any {
@@ -41,12 +40,11 @@ export function transformRequestData(config: AxiosRequestConfig): any {
   return config.data
 }
 
-
 export function transformResponseData(data: string): any {
-    try {
-        return JSON.parse(data);
-    } catch(err) {
-        // console.log(err);
-    }
-    return data;
+  try {
+    return JSON.parse(data)
+  } catch (err) {
+    // console.log(err);
+  }
+  return data
 }
