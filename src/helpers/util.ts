@@ -59,8 +59,7 @@ export function extend<T, U>(to: T, from: U): T & U {
 
 // 深拷贝上次的数据。
 export function deepMerge(...obj: Array<any>): any {
-  let result = Object.create(null) //
-
+  let result = Object.create(null) //  这里的deepMerge合并，我的前提条件错了。
   // 递归进行合并。
 
   obj.forEach(item => {
@@ -78,10 +77,6 @@ export function deepMerge(...obj: Array<any>): any {
           }
         } else {
           // 看下 key是否是Content-type的情况。
-          if (key === 'Content-Type') {
-            console.log('测试++++++++++++++++++++++++')
-          }
-
           result[key] = val // 这里对于同一种key的 value为值类型的 key字段只会有一个，因为总共合并的对象就 defaultConfig + config
         }
       }
