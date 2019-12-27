@@ -23,6 +23,8 @@ export interface AxiosRequestConfig {
   params?: any
   responseType?: XMLHttpRequestResponseType // 设置响应的数据类型。
   timeout?: number
+  transformRequest: AxiosTransform | AxiosTransform[]
+  transformResponse: AxiosTransform | AxiosTransform[]
   [propName: string]: any
 }
 
@@ -78,7 +80,7 @@ export interface AxiosInstance extends Axios {
     request: AxiosInterceptorManager<AxiosRequestConfig>
     response: AxiosInterceptorManager<AxiosResponse>
   }
-  defaults: AxiosRequestConfig   // 在类的实现上申明了这个字段，so在接口数据定义上也要定义这个字段
+  defaults: AxiosRequestConfig // 在类的实现上申明了这个字段，so在接口数据定义上也要定义这个字段
 
   <T = any>(config: AxiosRequestConfig): AxiosPromise<T> // axios主方法 这个主方法可以不传入
 
@@ -105,4 +107,9 @@ export interface ResolveFn<T> {
 
 export interface RejectFn {
   (error: any): any // 正常作为promise的error的话，是可返回，也可以不返回数据相关的内容的。
+}
+
+export interface AxiosTransform {
+  // 定义了函数结构。
+  (data: any, headers?: any): any
 }

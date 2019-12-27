@@ -1,5 +1,8 @@
 //  声明一个默认类型的参数。defaults的类型参数。
 import { AxiosRequestConfig } from './types'
+// 把processHeaders的处理放在这里进行,别把对config.data的逻辑也可以放在默认配置中完成执行。
+import { processHeaders } from './helpers/headers'
+import { transformRequestData, transformResponseData } from './core/dispatch'
 
 const defaults: AxiosRequestConfig = {
   method: 'get',
@@ -10,7 +13,20 @@ const defaults: AxiosRequestConfig = {
     common: {
       Accept: 'application/json, text/plain; */*'
     }
-  }
+  },
+
+  transformRequest: [
+    function(data: any, headers: any): any {
+      processHeaders(headers, data) // 处理headers的。
+      return transformRequestData(data)
+    }
+  ],
+
+  transformResponse: [
+    function(data: any): any {
+      return transformResponseData(data)
+    }
+  ]
   // 这里对于一个请求 应该是除了header之外的，都是单值的字段，如果用户传入了就取用户传入的，如果没传就取默认的。 只有headeras是一个obj对象。
 }
 
