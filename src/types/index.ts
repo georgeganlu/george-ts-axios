@@ -113,3 +113,10 @@ export interface AxiosTransform {
   // 定义了函数结构。
   (data: any, headers?: any): any
 }
+
+// 定义一个实例的继承的方法 axios.create()  // 返回一个新的 axios的实例。
+export interface AxiosInstanceStatic extends AxiosInstance {
+  create(config?: AxiosRequestConfig): AxiosInstance
+}
+
+// 定义了接口类型，还要进行实现这个接口的类型 。

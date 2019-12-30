@@ -40,7 +40,7 @@ stratKeysFromVal2.forEach(key => {
 const stratKeyDeepMerge = ['headers']
 stratKeyDeepMerge.forEach(key => {
   starts[key] = deepMergeStrat // 深合并的策略
-});
+})
 
 // 不同的值有不同的合并策略。
 export default function mergeConfig(
@@ -49,7 +49,7 @@ export default function mergeConfig(
 ): AxiosRequestConfig {
   // config1代表是的默认配置， config2代表用户传入
   if (!config2) {
-    config2 = {}
+    config2 = Object.create(null)
   }
 
   // 声明一个最终合并过后返回的config对象。
@@ -57,14 +57,14 @@ export default function mergeConfig(
 
   // 合并默认字段方法的，在用户输入的默认字段为空的情况下。
   for (let key in config1) {
-    if (!config2[key]) {
+    if (!config2![key]) {
       mergeField(key)
     }
   }
 
   for (let key in config2) {
     //
-    mergeField(key)  
+    mergeField(key)
   }
 
   function mergeField(key: string): void {
