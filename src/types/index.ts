@@ -23,8 +23,8 @@ export interface AxiosRequestConfig {
   params?: any
   responseType?: XMLHttpRequestResponseType // 设置响应的数据类型。
   timeout?: number
-  transformRequest: AxiosTransform | AxiosTransform[]
-  transformResponse: AxiosTransform | AxiosTransform[]
+  transformRequest?: AxiosTransform | AxiosTransform[]
+  transformResponse?: AxiosTransform | AxiosTransform[]
   [propName: string]: any
 }
 
