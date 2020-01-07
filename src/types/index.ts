@@ -25,6 +25,7 @@ export interface AxiosRequestConfig {
   timeout?: number
   transformRequest?: AxiosTransform | AxiosTransform[]
   transformResponse?: AxiosTransform | AxiosTransform[]
+  cancelToken: CancelToken
   [propName: string]: any
 }
 
@@ -120,3 +121,19 @@ export interface AxiosInstanceStatic extends AxiosInstance {
 }
 
 // 定义了接口类型，还要进行实现这个接口的类型 。
+
+// 定义CancelToken这个实例类的数据结构。
+export interface CancelToken {
+  promise: Promise<string>
+  reason?: string
+}
+
+// 这个实例类有一个构造函数，定义这个函数。
+export interface CancelExecutor {
+  (fn: Actions): void
+}
+
+// 定义构造函数里面最终要执行的函数。
+export interface Actions {
+  (reason?: string): void
+}
