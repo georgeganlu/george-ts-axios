@@ -10,7 +10,7 @@ axios({
   data: {a: 1},              // 这里data传输的内容不同，会导致完全不同的效果 主要看是不是 [object Object];   Object.prototype.toString();
   headers: {
     test: '321'
-  }
+  },
 }).then((res) => {
   console.log(res.data)
 })

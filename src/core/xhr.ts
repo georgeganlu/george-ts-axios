@@ -46,6 +46,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         config,
         request: req
       }
+      debugger
       // 处理响应的参数.
       handleResponse(resultData)
     }

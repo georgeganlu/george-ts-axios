@@ -37,14 +37,16 @@ export function parseHeaders(header: string): any {
   }
   // let head : headers = {};   // 这里的head 等会验证下和 Object.create(null) 空对象进行比较。
   let head = Object.create(null)
-  header.split('/r/n').forEach(line => {
-    let [key, value] = line.split(':')
+  let list = header.split('\r\n')
+  list.forEach(line => {
+    let [key, ...value] = line.split(':')
     key = key.trim().toLowerCase()
-    value = value.trim()
+
     if (!key) {
       return
     }
-    head[key] = value
+    const val = value.join(':').trim()
+    head[key] = val
   })
   return head
 }
