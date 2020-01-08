@@ -3,7 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 // node common.js
 module.exports = { 
-    // entry的入口表示法。
+    // entry的入口表示法。  --- entry形成多入口的形式。 SPA变成多页面的。
     mode: 'development',
     entry: fs.readdirSync(__dirname).reduce((entrys, dir) => {
         let fullDir = path.join(__dirname, dir);
@@ -12,7 +12,7 @@ module.exports = {
             entrys[dir] = [entry];   // 上面是检查这个文件目录是否存在 且 文件目录存在。
         }
         return entrys;
-    }, {}),
+    }, {}), 
 
     output:{
         path: path.join(__dirname, "build"),

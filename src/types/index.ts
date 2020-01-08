@@ -140,6 +140,14 @@ export interface Actions {
 
 // 扩展CancelToken的静态接口。
 export interface CancelTokenSource {
-  token: CancelToken
-  cancel: Actions
+  // 这个是cancelToken.source()这个静态方法，返回的一个对象。
+  token: CancelToken // 这个对象的结构是 token是 一个新的cancelToken对象。
+  cancel: Actions // cancel是一个最终的执行方法。
+}
+
+// 还要定义cancelToken这个类型, cancelToken这个类本身可以实例化，同时还有一个source这个静态属性。
+export interface CancelTokenStatic {
+  new (exector: CancelExecutor): CancelToken
+
+  source(): CancelTokenSource
 }

@@ -1,4 +1,4 @@
-import { CancelExecutor } from '../types'
+import { CancelExecutor, CancelTokenSource, Actions } from '../types'
 
 export interface resolvePromiseFn {
   (message?: string): void
@@ -25,6 +25,18 @@ export default class CancelToken {
       // 在executor里面传入的函数里面执行 promise的 resolve来触发then的执行。
       resolvePromise()
     })
+  }
+
+  static source(): CancelTokenSource {
+    let cancel!: Actions
+
+    let token = new CancelToken(c => {
+      cancel = c // 取消的执行方法。
+    })
+    return {
+      cancel,
+      token
+    }
   }
 }
 
