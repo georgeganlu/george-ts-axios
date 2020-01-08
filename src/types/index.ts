@@ -139,4 +139,7 @@ export interface Actions {
 }
 
 // 扩展CancelToken的静态接口。
-export interface CancelTokenSource {}
+export interface CancelTokenSource {
+  token: CancelToken
+  cancel: Actions
+}
