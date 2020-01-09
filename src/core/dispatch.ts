@@ -8,6 +8,9 @@ import xhr from './xhr'
 
 export default function axios(config: AxiosRequestConfig): AxiosPromise {
   // todo
+  throwIfRequestJudge(config)
+
+  // 在发送请求之前就去验证这这个reason信息是否填写过了, 如果已经写了直接抛出来
   processConfig(config)
 
   return xhr(config).then(res => {
@@ -55,4 +58,10 @@ export function transformResponseData(data: string): any {
     // console.log(err);
   }
   return data
+}
+
+function throwIfRequestJudge(config: AxiosRequestConfig) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequest()
+  }
 }

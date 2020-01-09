@@ -118,23 +118,31 @@ export interface AxiosTransform {
 // 定义一个实例的继承的方法 axios.create()  // 返回一个新的 axios的实例。
 export interface AxiosInstanceStatic extends AxiosInstance {
   create(config?: AxiosRequestConfig): AxiosInstance
+
+  // 给实例增加三个属性。
+  CancelToken: CancelTokenStatic
+  Cancel: CancelStatic
+  isCancel: (value: any) => boolean
 }
 
 // 定义了接口类型，还要进行实现这个接口的类型 。
 
 // 定义CancelToken这个实例类的数据结构。
 export interface CancelToken {
-  promise: Promise<string>
-  reason?: string
+  promise: Promise<Cancel>
+  reason?: Cancel
+
+  // 如果对一个请求的cancelToken已经被使用过后的话，那
+  throwIfRequest(): void
 }
 
 // 这个实例类有一个构造函数，定义这个函数。
 export interface CancelExecutor {
-  (fn: Actions): void
+  (fn: CancelActions): void
 }
 
 // 定义构造函数里面最终要执行的函数。
-export interface Actions {
+export interface CancelActions {
   (reason?: string): void
 }
 
@@ -142,12 +150,26 @@ export interface Actions {
 export interface CancelTokenSource {
   // 这个是cancelToken.source()这个静态方法，返回的一个对象。
   token: CancelToken // 这个对象的结构是 token是 一个新的cancelToken对象。
-  cancel: Actions // cancel是一个最终的执行方法。
+  cancel: CancelActions // cancel是一个最终的执行方法。
 }
 
-// 还要定义cancelToken这个类型, cancelToken这个类本身可以实例化，同时还有一个source这个静态属性。
+// 还要定义cancelToken这个类型, cancelToken这个类本身可以实例化，同时还有一个source这个静态属性。 这里是类类型。
 export interface CancelTokenStatic {
   new (exector: CancelExecutor): CancelToken
 
   source(): CancelTokenSource
+}
+
+// 在实例化的时候 axios.CancelToken 返回 CancelToken这个类。
+
+// 所以CancelTokenStatic这个静态类型就定义了CancelToken这个类。
+
+// 在定义cancel这个信息类 这个是实例的数据结构
+export interface Cancel {
+  message?: string
+}
+
+// Cancel这个类的类型。
+export interface CancelStatic {
+  new (message?: string): Cancel // 这里是类的类型。
 }

@@ -5,6 +5,9 @@ import { AxiosInstance, AxiosRequestConfig, AxiosInstanceStatic } from './types'
 import defaults from './defaults'
 import mergeConfig from './core/mergeConfig'
 
+import CancelToken from './cancel/CancelToken'
+import Cancel, { isCancel } from './cancel/Cancel'
+
 function createInstance(initConfig: AxiosRequestConfig): AxiosInstanceStatic {
   let context = new Axios(initConfig)
   let instance = Axios.prototype.request.bind(context) // 绑定这个方法执行时的this;
@@ -20,5 +23,9 @@ axios.create = function(config: AxiosRequestConfig) {
   let config3 = mergeConfig(defaults, config)
   return createInstance(config3)
 }
+
+axios.CancelToken = CancelToken // CancelToken类
+axios.Cancel = Cancel
+axios.isCancel = isCancel
 
 export default axios
