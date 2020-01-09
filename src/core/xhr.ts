@@ -51,6 +51,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     req.onerror = function() {
+      debugger
       fail(createError('Network Error', config, null, req))
     }
 
@@ -78,7 +79,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     if (cancelToken) {
       // 注册执行函数。
       cancelToken.promise.then(res => {
-        req.abort() // 取消请求。
+        req.abort() // 取消请求。   // 取消请求的同时会被 onerror进行捕获。
         fail(res)
       })
     }

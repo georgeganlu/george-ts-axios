@@ -22,7 +22,7 @@ export default class CancelToken {
       if (this.reason) {
         return
       }
-      this.reason = new Cancel(message)
+      this.reason = new Cancel(message) // 执行函数 c 传进来的message为 string类型， 通过 new Cancel的实例类，进行实例化。
       // 在executor里面传入的函数里面执行 promise的 resolve来触发then的执行。
       resolvePromise(this.reason)
     })
