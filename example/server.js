@@ -2,6 +2,7 @@ const express = require("express");
 const webpackConfig = require('./webpack.config');
 const webpack = require("webpack");
 const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser');
 const multipary = require("connect-multiparty");
 const webpackDevMiddleWare = require("webpack-dev-middleware");
 const webpackHotMiddleware = require('webpack-hot-middleware')
@@ -10,6 +11,8 @@ const routerFun = require("./routerFun/index");
 const os = require('os');
 const path = require("path");
 const app = express();
+
+require('./server2');
 
 // 直接使用webpackDevServer 启用服务和执更新，及分别使用dev-middleWare和hot-middleWare来启用。
 // 尝试使用两个devServer的方式。
@@ -39,6 +42,8 @@ app.use(express.static(__dirname    // 静态服，也可以设置cookies;
     //     res.coo
     // }
 ));
+
+app.use(cookieParser());
 app.use(bodyParser.json());   // 解析传输数据
 // app.use(bodyParser.text())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,6 +51,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multipary({  // 文件上传中间
     uploadDir: path.resolve(__dirname, "upload-file"),
 }));
+
+
 
 const router = express.Router();
 

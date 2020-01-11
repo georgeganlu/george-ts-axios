@@ -8,7 +8,7 @@ import xhr from './xhr'
 
 export default function axios(config: AxiosRequestConfig): AxiosPromise {
   // todo
-  test() // 直接throw抛出的话，promisew会直接捕捉到 这个请求。
+  //   test() // 直接throw抛出的话，promisew会直接捕捉到 这个请求。
   throwIfRequestJudge(config)
 
   // 在发送请求之前就去验证这这个reason信息是否填写过了, 如果已经写了直接抛出来

@@ -13,7 +13,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       headers = {},
       responseType,
       timeout,
-      cancelToken
+      cancelToken,
+      withCredentials
     } = config
 
     let req = new XMLHttpRequest()
@@ -26,6 +27,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     req.open(method.toUpperCase(), url!, true) // 发送请求默认使用异步的方式。
+    if (withCredentials) {
+      req.withCredentials = true // 跨域的时候是否携带cookie,同域的情况下是默认发送cookie的。
+    }
 
     req.onreadystatechange = function() {
       if (req.readyState !== 4) {
