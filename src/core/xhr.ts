@@ -55,7 +55,6 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     req.onerror = function() {
-      debugger
       fail(createError('Network Error', config, null, req))
     }
 

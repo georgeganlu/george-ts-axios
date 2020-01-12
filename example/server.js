@@ -67,10 +67,9 @@ app.use(router);
 const port = process.env.PORT || 9800;
 const host = getIPAdress();
 
-module.exports = app.listen(port, host, () => {
+app.listen(port, host, () => {
     console.log(`Server listening on http://${host}:${port}`);
 });
-
 
 
 function getIPAdress() {
@@ -85,3 +84,10 @@ function getIPAdress() {
         }
     }
 }
+
+
+module.exports = getIPAdress
+
+
+
+
