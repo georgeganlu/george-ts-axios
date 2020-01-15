@@ -48,16 +48,9 @@ const cors = {
 function withCredentials(router) {
     router.get('/withCredentials/get', (req, res) => {
         res.set(cors);
-
-        console.log(req.method, "请求的methods是");
-        if (req.method.toLowerCase() == 'options') {
-            console.log("++++++++++++++++++++++++++++++++++++")
-            res.send(200);
-        }
         let cookie = req.cookies;
         console.log(cookie);        
         
-        // res.set('x-xsrf-cookie', 'alex234234');
         res.cookie('x-xsrf-cookie', 'test-alex');
         // res.set('uuid', '456213122-8899555-7785412-996321745');
         res.send(cookie);
