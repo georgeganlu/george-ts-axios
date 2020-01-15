@@ -20,7 +20,7 @@ function createInstance(initConfig: AxiosRequestConfig): AxiosInstanceStatic {
 const axios = createInstance(defaults)
 
 axios.create = function(config: AxiosRequestConfig) {
-  let config3 = mergeConfig(defaults, config)
+  let config3 = mergeConfig(defaults, config) // 合并默认配置和用户传入的配置。  axios本身是一个实例，axios.create() 函数在返回一个axios的新实例。
   return createInstance(config3)
 }
 

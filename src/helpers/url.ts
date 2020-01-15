@@ -52,3 +52,27 @@ export function bindURL(url: string, params?: any): string {
   })
   return url
 }
+
+// 对url的处理进行2件事 判断是否是同域 及 withCredentials为true的情况下。
+export interface OriginName {
+  protocol: string
+  host: string
+}
+
+let link = document.createElement('a')
+
+export function isSameOrigin(url: string): boolean {
+  let urlOrigin = resolveUrl(url)
+  let currentOrigin = resolveUrl(window.location.href)
+  return currentOrigin.protocol === urlOrigin.protocol && currentOrigin.host === urlOrigin.host
+}
+
+export function resolveUrl(url: string): OriginName {
+  link.setAttribute('href', url)
+
+  const { protocol, host } = link
+  return {
+    protocol,
+    host
+  }
+}

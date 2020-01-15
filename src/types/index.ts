@@ -27,6 +27,8 @@ export interface AxiosRequestConfig {
   transformResponse?: AxiosTransform | AxiosTransform[]
   cancelToken?: CancelToken
   widthCredentials?: boolean
+  xsrfCookieName?: string // 存在cookie中的key字段。
+  xsrfHeaderName?: string // 加在requestHeaders头中的内容。
   [propName: string]: any
 }
 

@@ -1,10 +1,11 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from '../types'
 import { parseHeaders } from '../helpers/util'
 import createError from '../helpers/error'
+import { isSameOrigin } from '../helpers/url'
+import cookie from '../helpers/cookie'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   // xhr发送请求的三个步骤。
-
   return new Promise((succ, fail) => {
     let {
       url,
@@ -14,7 +15,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       responseType,
       timeout,
       cancelToken,
-      withCredentials
+      withCredentials,
+      xsrfCookieName,
+      xsrfHeaderName
     } = config
 
     let req = new XMLHttpRequest()
@@ -27,6 +30,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     req.open(method.toUpperCase(), url!, true) // 发送请求默认使用异步的方式。
+
     if (withCredentials) {
       req.withCredentials = true // 跨域的时候是否携带cookie,同域的情况下是默认发送cookie的。
     }
@@ -64,6 +68,15 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
     }
 
     // 如果要扑捉错误的话，一般错误分成3种。  1种网络请求本身出错，1种超时出错，1种返回状态码不在 200-300之间的出错  总共出错的类型是3种;
+
+    if ((withCredentials || isSameOrigin(url!)) && xsrfCookieName) {
+      // 这里是cookieName的字段不能为空，
+      const cookieValue = cookie.read(xsrfCookieName)
+      if (cookieValue && xsrfHeaderName) {
+        headers['test'] = 'asdfasf'
+        // headers[xsrfHeaderName] = cookieValue;  // 给 requestHeader添加请求头。
+      }
+    }
 
     // 发送内容前
     Object.keys(headers).forEach(name => {

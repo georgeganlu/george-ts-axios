@@ -2,7 +2,7 @@
 module.exports = function base(router) {
     router.get('/base/get', function(req, res) {
         console.log(req.query, "req++++++++++++++++++++++");
-        res.json(req.query);
+        res.send('asdfasdfasdf');
     });
 
     router.post('/base/post', function(req, res) {
