@@ -29,6 +29,8 @@ export interface AxiosRequestConfig {
   widthCredentials?: boolean
   xsrfCookieName?: string // 存在cookie中的key字段。
   xsrfHeaderName?: string // 加在requestHeaders头中的内容。
+  onDownloadProgress?: (e: ProgressEvent) => void
+  onUploadProgress?: (e: ProgressEvent) => void
   [propName: string]: any
 }
 

@@ -86,3 +86,7 @@ export function deepMerge(...obj: Array<any>): any {
   })
   return result
 }
+
+export function isFormData(data: any): boolean {
+  return data !== undefined && data instanceof FormData
+}
