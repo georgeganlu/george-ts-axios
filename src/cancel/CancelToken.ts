@@ -11,6 +11,8 @@ export default class CancelToken {
   reason?: Cancel // 在接口的定义里面就决定了这个reason定义的情况 可传可不传，同样在实例的实现上也要保持一致。
 
   constructor(executor: CancelExecutor) {
+    debugger
+
     let resolvePromise: ResolvePromiseFn // 先声明标记这是一个变量
 
     this.promise = new Promise<Cancel>(resolve => {
@@ -37,6 +39,7 @@ export default class CancelToken {
   static source(): CancelTokenSource {
     let cancel!: CancelActions
 
+    debugger
     let token = new CancelToken(c => {
       cancel = c // 取消的执行方法。
     })

@@ -4,6 +4,8 @@ import axios, { CancelActions } from '../../src/index';
 const CancelToken = axios.CancelToken
 const source = CancelToken.source()
 
+debugger;
+
 axios.get('/cancel/get', {
   cancelToken: source.token
 }).catch(function(e) {
@@ -15,7 +17,6 @@ axios.get('/cancel/get', {
 
 setTimeout(() => {
   source.cancel('Operation canceled by the user.');
-
   setTimeout(() => {
     axios.post('/cancel/post', { a: 1 }, { cancelToken: source.token }).catch(function(e) {
       debugger;
@@ -24,7 +25,6 @@ setTimeout(() => {
       }
     })
   }, 200)
-  
 }, 100)
 
 
