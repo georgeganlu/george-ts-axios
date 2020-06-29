@@ -19,6 +19,8 @@ export default class CancelToken {
       resolvePromise = resolve // 和正常的promise不同的是
     })
 
+    // 真巧妙。
+
     executor(message => {
       // 这里要防止用户多次调用执行函数。
       if (this.reason) {
@@ -26,7 +28,7 @@ export default class CancelToken {
       }
       this.reason = new Cancel(message) // 执行函数 c 传进来的message为 string类型， 通过 new Cancel的实例类，进行实例化。
       // 在executor里面传入的函数里面执行 promise的 resolve来触发then的执行。
-      resolvePromise(this.reason)
+      resolvePromise(this.reason) // resolvePromise这个方法本来是正常promise里面的
     })
   }
 
