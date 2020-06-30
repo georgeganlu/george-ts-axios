@@ -121,6 +121,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if (cancelToken) {
         // 注册执行函数。
         cancelToken.promise.then(res => {
+          console.log(res, '应该是cancel对象')
+          debugger
           req.abort() // 取消请求。   // 取消请求的同时会被 onerror进行捕获。
           fail(res)
         })
