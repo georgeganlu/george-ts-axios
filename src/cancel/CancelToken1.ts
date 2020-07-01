@@ -4,7 +4,7 @@
 // source.cancel('Operation canceled by the user.');
 
 import Cancel from './Cancel'
-import { CancelExecutor, CancelActions } from '../types/index'
+import { CancelExecutor, CancelActions, CancelTokenSource } from '../types/index'
 // 在xhr中执行的是 在xhr发送之后， cancelToken() 主方法的执行。
 // let { cancelToken }  = config;   其它的配置属性省略。
 
@@ -28,7 +28,7 @@ import { CancelExecutor, CancelActions } from '../types/index'
  * */
 
 export interface ResolveFn {
-  (msg: Cancel): void
+  (msg?: Cancel): void
 }
 
 export default class CancelToken {
@@ -38,7 +38,7 @@ export default class CancelToken {
 
   constructor(executor: CancelExecutor) {
     let succFn: ResolveFn
-    this.promise = new Promise((succ, fail) => {
+    this.promise = new Promise<Cancel>((succ, fail) => {
       succFn = succ
     })
 
@@ -51,7 +51,13 @@ export default class CancelToken {
     })
   }
 
-  static source() {
+  throwIfRequest(): void {
+    if (this.reson) {
+      throw this.reson
+    }
+  }
+
+  static source(): CancelTokenSource {
     let cancel!: CancelActions
 
     let token = new CancelToken(c => {
