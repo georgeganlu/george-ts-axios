@@ -26,7 +26,7 @@ export interface AxiosRequestConfig {
   transformRequest?: AxiosTransform | AxiosTransform[]
   transformResponse?: AxiosTransform | AxiosTransform[]
   cancelToken?: CancelToken
-  widthCredentials?: boolean
+  withCredentials?: boolean
   xsrfCookieName?: string // 存在cookie中的key字段。
   xsrfHeaderName?: string // 加在requestHeaders头中的内容。
   onDownloadProgress?: (e: ProgressEvent) => void
@@ -120,6 +120,7 @@ export interface AxiosTransform {
   (data: any, headers?: any): any
 }
 
+// 静态的类类型。
 // 定义一个实例的继承的方法 axios.create()  // 返回一个新的 axios的实例。
 export interface AxiosInstanceStatic extends AxiosInstance {
   create(config?: AxiosRequestConfig): AxiosInstance
@@ -134,6 +135,7 @@ export interface AxiosInstanceStatic extends AxiosInstance {
 
 // 定义CancelToken这个实例类的数据结构。
 export interface CancelToken {
+  // 接品只是类的定义。
   promise: Promise<Cancel>
   reason?: Cancel
 

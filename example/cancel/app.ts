@@ -4,24 +4,19 @@ import axios, { CancelActions } from '../../src/index';
 const CancelToken = axios.CancelToken
 const source = CancelToken.source()
 
-debugger;
+// axios.get('/cancel/get', {
+//   cancelToken: source.token
+// }).catch(function(e) {
+//   if (axios.isCancel(e)) {
+//     console.log('Request canceled', e.message)
+//   }
+// })
 
-axios.get('/cancel/get', {
-  cancelToken: source.token
-}).catch(function(e) {
-  debugger;
-  if (axios.isCancel(e)) {
-    console.log('Request canceled', e.message)
-  }
-})
+// source.cancel('Operation canceled by the user.');
 
-source.cancel('Operation canceled by the user.');
-
-// setTimeout(() => {
- 
+// setTimeout(() => { 
 //   setTimeout(() => {
 //     axios.post('/cancel/post', { a: 1 }, { cancelToken: source.token }).catch(function(e) {
-//       debugger;
 //       if (axios.isCancel(e)) {
 //         console.log(e.message)
 //       }
@@ -29,17 +24,19 @@ source.cancel('Operation canceled by the user.');
 //   }, 200)
 // }, 100)
 
+// 第二种调用的方法。
 
-// let cancel: CancelActions
-// axios.get('/cancel/get', {
-//   cancelToken: new CancelToken(c => {
-//     cancel = c
-//   })
-// }).catch(function(e) {
-//   if (axios.isCancel(e)) {
-//     console.log('Request canceled')
-//   }
-// })
+
+let cancel: CancelActions
+axios.get('/cancel/get', {
+  cancelToken: new CancelToken(c => {
+    cancel = c
+  })
+}).catch(function(e) {
+  if (axios.isCancel(e)) {
+    console.log('Request canceled')
+  }
+})
 
 // setTimeout(() => {
 //    cancel("用户取消");

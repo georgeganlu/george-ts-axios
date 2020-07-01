@@ -37,23 +37,30 @@ app.use(router);
 console.log(host, 'host的内容是+++++++++++');
 
 const cors = {
-    'Access-Control-Allow-Origin': `http://${host}:9800`,
-    'Access-Control-Allow-Credentials': true,  // 允许 跨域传cookie
-    'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
-    // 'Access-Control-Request-Method': 'GET, OPTIONS, HEAD, POST',
-    'Access-Control-Allow-Headers': 'test, accept, content-type',
-    'Access-Control-Expose-Headers': 'Content-Type, uuid'
+    // 'Access-Control-Allow-Origin': `http://${host}:9800`,
+    // 'Access-Control-Allow-Credentials': true,  // 允许 跨域传cookie
+    // 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+    // 'Access-Control-Allow-Headers': 'test, accept, Content-Type',
+    // 'Access-Control-Expose-Headers': 'Content-Type, uuid'
+
+  'Access-Control-Allow-Origin': `http://${host}:9800`,
+  'Access-Control-Allow-Credentials': true,
+  'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type'
 };
 
 function withCredentials(router) {
-    router.get('/withCredentials/get', (req, res) => {
+    router.post('/withCredentials/get', (req, res) => {
         res.set(cors);
-        let cookie = req.cookies;
-        console.log(cookie);        
-        
-        res.cookie('x-xsrf-cookie', 'test-alex');
+        console.log(req.cookies);
+        res.json(req.cookies)
+        // res.cookie('x-xsrf-cookie', 'test-alex');
         // res.set('uuid', '456213122-8899555-7785412-996321745');
-        res.send(cookie);
+       
+    })
+    router.options('/withCredentials/get', (req, res) => {
+        res.set(cors)
+        res.send();
     })
 
     // router.get('/cookie/xs', (req, res) => {

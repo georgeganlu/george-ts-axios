@@ -32,9 +32,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
     processHeaders() // 5. 处理headers头内容。
 
-    req.send(data) // 6. 发送请求。
+    cancelTokenFun() // 6. 取消请求。
 
-    cancelTokenFun() // 7. 取消请求。
+    req.send(data) // 7. 发送请求。
 
     // 如果要扑捉错误的话，一般错误分成3种。  1种网络请求本身出错，1种超时出错，1种返回状态码不在 200-300之间的出错  总共出错的类型是3种;
 
@@ -47,7 +47,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       }
 
       if (withCredentials) {
-        req.withCredentials = true // 跨域的时候是否携带cookie,同域的情况下是默认发送cookie的。
+        req.withCredentials = withCredentials
+        // 跨域的时候是否携带cookie,同域的情况下是默认发送cookie的。
       }
     }
 
@@ -122,7 +123,6 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         // 注册执行函数。
         cancelToken.promise.then(res => {
           console.log(res, '应该是cancel对象')
-          debugger
           req.abort() // 取消请求。   // 取消请求的同时会被 onerror进行捕获。
           fail(res)
         })

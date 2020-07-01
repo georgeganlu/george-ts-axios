@@ -32,7 +32,7 @@ export interface ResolveFn {
 }
 
 export default class CancelToken {
-  promise?: Promise<Cancel>
+  promise: Promise<Cancel>
 
   reson?: Cancel
 
