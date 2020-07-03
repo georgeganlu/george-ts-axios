@@ -6,6 +6,7 @@ const config = require('./config');
 const cancel = require('./cancel');
 const cookie = require('./cookie');
 const more = require('./more');
+const withCredentials = require('./withCredentials');
 module.exports = function(Router) {
     base(Router);
     error(Router);
@@ -14,4 +15,5 @@ module.exports = function(Router) {
     cancel(Router);
     cookie(Router);
     more(Router);
+    withCredentials(Router);
 }

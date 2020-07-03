@@ -3,6 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const os = require('os');
+const fs = require('fs');
+const path = require('path');
 
 app.use(cookieParser());
 
@@ -28,13 +30,13 @@ app.use(bodyParser.json());   // 解析传输数据
 // app.use(bodyParser.text())
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// app.use(express.static(path.join(__dirname)))
+
 const router = express.Router();
 withCredentials(router)
 
 app.use(router);
 
-
-console.log(host, 'host的内容是+++++++++++');
 
 const cors = {
     // 'Access-Control-Allow-Origin': `http://${host}:9800`,
@@ -42,7 +44,6 @@ const cors = {
     // 'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
     // 'Access-Control-Allow-Headers': 'test, accept, Content-Type',
     // 'Access-Control-Expose-Headers': 'Content-Type, uuid'
-
   'Access-Control-Allow-Origin': `http://${host}:9800`,
   'Access-Control-Allow-Credentials': true,
   'Access-Control-Allow-Methods': 'POST, GET, PUT, DELETE, OPTIONS',
@@ -50,18 +51,19 @@ const cors = {
 };
 
 function withCredentials(router) {
-    router.post('/withCredentials/get', (req, res) => {
+    router.post('/with/get', (req, res) => {
         res.set(cors);
-        console.log(req.cookies);
+        console.log(req.cookies, '234234234234');
         res.json(req.cookies)
         // res.cookie('x-xsrf-cookie', 'test-alex');
         // res.set('uuid', '456213122-8899555-7785412-996321745');
        
     })
-    router.options('/withCredentials/get', (req, res) => {
-        res.set(cors)
-        res.send();
-    })
+    router.get('/csrf/get', (req, res) => {
+        res.setHeader("Content-Type", "text/html");
+        let pathTem = path.join(__dirname, 'server2-template/csrf.html');
+        res.send(fs.readFileSync(pathTem));
+    });
 
     // router.get('/cookie/xs', (req, res) => {
     //     // let cookie = req.cookies;

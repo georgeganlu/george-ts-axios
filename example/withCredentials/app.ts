@@ -5,7 +5,7 @@ import axios from '../../src/index'
 
 
 
-axios.post('http://192.168.1.104:8089/withCredentials/get', { a: 'b' },
+axios.post('http://172.19.23.42:8089/with/get', { a: 'b' },
     {
         withCredentials: true
     }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div>
+        这里是B站点。--------的测试用的。
+    </div>
+
+    <script>
+        window.onload = function () {
+            const req = new XMLHttpRequest();
+            const url = 'http://172.19.23.42:9800/with/test';
+            req.open('get', url, true);
+            req.withCredentials = true;
+            req.onreadystatechange = function () {
+                if (req.readyState === 4) {
+                    // readyState会连续进行触发直到为 4为止。 这里先不考虑错误。
+                    const responseData = req.responseText ? req.responseText : req.response
+                    console.log(responseData, 'responseData ------- 成功的拿到了对方返回的cookie的值。可以模拟用户的操作');
+                }
+            }
+            req.send();
+        }
+    </script>
+</body>
+
+</html>
