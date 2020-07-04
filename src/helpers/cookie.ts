@@ -5,7 +5,8 @@ const cookie = {
     // let reg = new RegExp(' (^|;\\s)*(' + name +') = ([^;]*)')
     let reg = new RegExp('(^|;\\s*)(' + name + ')=([^;]*)')
     const match = document.cookie.match(reg)
-    return match ? decodeURIComponent(match[3]) : null
+    // return match ? decodeURIComponent(match[3]) : null
+    return match ? match[3] : null
   }
 }
 

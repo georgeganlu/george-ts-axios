@@ -7,6 +7,8 @@ const cancel = require('./cancel');
 const cookie = require('./cookie');
 const more = require('./more');
 const withCredentials = require('./withCredentials');
+const csrf = require('./csrf');
+const progress = require('./progress');
 module.exports = function(Router) {
     base(Router);
     error(Router);
@@ -16,4 +18,6 @@ module.exports = function(Router) {
     cookie(Router);
     more(Router);
     withCredentials(Router);
+    csrf(Router);
+    progress(Router);
 }

@@ -35,13 +35,12 @@ app.use(webpackDevMiddleWare(compiler, {
 
 app.use(webpackHotMiddleware(compiler));
 
-app.use(express.static(__dirname    // 静态服，也可以设置cookies;
-    // , 
-    // {
-    // setHeaders(res) {
-    //     res.coo
-    // }
-));
+// 静态服，也可以设置cookies;
+app.use(express.static(__dirname, {
+    setHeaders(res) {
+        res.cookie('xsrf-token-name', 'test-cookie-测试');
+    }
+}))
 
 app.use(cookieParser());
 app.use(bodyParser.json());   // 解析传输数据

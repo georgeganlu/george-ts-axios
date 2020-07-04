@@ -37,6 +37,7 @@ module.exports = {
                     }
                 ]
             },
+            // 为nprogress 做好了准备。
             {
                 test: /\.css$/,
                 use:[
