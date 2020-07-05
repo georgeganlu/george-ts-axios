@@ -9,6 +9,8 @@ const more = require('./more');
 const withCredentials = require('./withCredentials');
 const csrf = require('./csrf');
 const progress = require('./progress');
+const auth = require('./auth');
+const validate = require('./validate');
 module.exports = function(Router) {
     base(Router);
     error(Router);
@@ -20,4 +22,6 @@ module.exports = function(Router) {
     withCredentials(Router);
     csrf(Router);
     progress(Router);
+    auth(Router);
+    validate(Router);
 }

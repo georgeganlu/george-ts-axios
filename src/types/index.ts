@@ -31,6 +31,9 @@ export interface AxiosRequestConfig {
   xsrfHeaderName?: string // 加在requestHeaders头中的内容。
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
+  auth?: AuthBasicSource
+  validateStatus?: (status: number) => boolean
+
   [propName: string]: any
 }
 
@@ -179,4 +182,9 @@ export interface Cancel {
 // Cancel这个类的类型。
 export interface CancelStatic {
   new (message?: string): Cancel // 这里是类的类型。
+}
+
+export interface AuthBasicSource {
+  username: string
+  password: string
 }

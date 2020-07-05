@@ -30,7 +30,11 @@ const defaults: AxiosRequestConfig = {
     function(data: any): any {
       return transformResponseData(data)
     }
-  ]
+  ],
+
+  validateStatus(status: number): boolean {
+    return status >= 200 && status < 300
+  }
   // 这里对于一个请求 应该是除了header之外的，都是单值的字段，如果用户传入了就取用户传入的，如果没传就取默认的。 只有headeras是一个obj对象。
 }
 

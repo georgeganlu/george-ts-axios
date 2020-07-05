@@ -32,6 +32,7 @@ export default class Axios {
     this.defaults = initConfig
   }
 
+  // 实现axios() 函数的重载，既是对象也是函数。 可以axios(url)  // axios(url, config);
   request(url: any, config?: any): AxiosPromise {
     // 在里面进行了一个判断 实现函数的重载。
     if (typeof url === 'string') {
@@ -40,7 +41,7 @@ export default class Axios {
       }
       config.url = url
     } else {
-      config = url
+      config = url // 如果输入的url不是一个string的话，这个url就是一个config配制的对象。
     }
 
     // 在这里需要把合并的一个默认的配置和 用户设置的config.

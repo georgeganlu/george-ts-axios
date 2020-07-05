@@ -37,10 +37,13 @@ stratKeysFromVal2.forEach(key => {
   starts[key] = fromVal2Strat // 只接受用户输入的方式。
 })
 
-const stratKeyDeepMerge = ['headers']
+const stratKeyDeepMerge = ['headers', 'auth']
 stratKeyDeepMerge.forEach(key => {
   starts[key] = deepMergeStrat // 深合并的策略
 })
+
+// 其实就是把用户传入的config的配制拆成两部分，一部分是只要用户的输入的内容，包括 url, data, params.
+// 另一部分是深度合并的内容
 
 // 不同的值有不同的合并策略。
 export default function mergeConfig(
@@ -66,6 +69,9 @@ export default function mergeConfig(
     //
     mergeField(key)
   }
+
+  // starts 包含的字段是 { 'url', 'params', 'data' ,   'headers' }    // 其中url,params, data, 是只取用户输入的config,
+  // headers这个是一个对象的合并，需要deepMerge, 至于其它都是值类型的拷贝。
 
   function mergeField(key: string): void {
     let actions = starts[key] || defaultStrat

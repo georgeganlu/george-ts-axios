@@ -19,7 +19,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       xsrfCookieName,
       xsrfHeaderName,
       onDownloadProgress,
-      onUploadProgress
+      onUploadProgress,
+      validateStatus,
+      auth
     } = config
 
     let req = new XMLHttpRequest() // 1. 创建xhr对象
@@ -105,6 +107,11 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         delete headers['Content-Type']
       }
 
+      if (auth) {
+        let str = `${auth.username}:${auth.password}`
+        headers['Authorization'] = `Base ${btoa(str)}`
+      }
+
       // 发送内容前
       Object.keys(headers).forEach(name => {
         // 这里是设置headers的内容，当data数据为空时，content-type就没有设置的必要了，但是其它headers里面的内容是需要的。
@@ -129,9 +136,9 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       }
     }
 
-    // 处理handle响应.
+    // 处理handle响应.   -- 如果允许了自定义的状态码的话。
     function handleResponse(response: AxiosResponse) {
-      if (response.status >= 200 && response.status < 300) {
+      if (!validateStatus || validateStatus(response.status)) {
         succ(response)
       } else {
         let message = response.data.message || `Request failed with status code ${response.status}`
