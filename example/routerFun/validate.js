@@ -12,4 +12,11 @@ module.exports = function(router) {
             msg: 'post'
         });
     })
+
+    router.get('/paramsSerializer/get', (req, res) => {
+        console.log(req.query, 'req.params');
+        res.send({
+            msg: 'adsfasdf'
+        });
+    })
 }

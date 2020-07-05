@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from '../types'
-import { bindURL } from '../helpers/url'
+import { bindURL, isUrlSearchParams } from '../helpers/url'
 import { isPlainObject, deepMerge } from '../helpers/util'
 import { processHeaders, deepMergeHeader } from '../helpers/headers'
 import transform from './transform'
@@ -37,8 +37,8 @@ export function processConfig(config: AxiosRequestConfig): void {
 }
 
 export function transformUrl(config: AxiosRequestConfig): string {
-  let { url, params } = config // 只是在这里取出params的参数。
-  return bindURL(url!, params) // bindURL只是处理url的形式。
+  let { url, params, paramsSerializer } = config // 只是在这里取出params的参数。
+  return bindURL(url!, params, paramsSerializer) // bindURL只是处理url的形式。
 }
 
 export function transfromHeaders(config: AxiosRequestConfig): any {
