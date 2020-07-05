@@ -119,6 +119,7 @@ export default class Axios {
     return this._requestWithPost('patch', url, data, config)
   }
 
+  // get , delete head options 四种请求方式是只有url和 config的。
   _requestWithGet(method: string, url: string, config?: AxiosRequestConfig): AxiosPromise {
     let params = Object.assign(config || {}, {
       url,
@@ -127,6 +128,7 @@ export default class Axios {
     return this.request(params as AxiosRequestConfig)
   }
 
+  // 另外3种是post, put, patch
   _requestWithPost(
     method: string,
     url: string,
