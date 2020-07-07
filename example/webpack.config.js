@@ -50,6 +50,7 @@ module.exports = {
     resolve: {   // 自动解析用户引入文件的扩展，使用户引入文件时不用带这些后缀。
         extensions: ['.ts', '.js', '.tsx']
     },
+    stats: 'errors-only',
     plugins:[
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),

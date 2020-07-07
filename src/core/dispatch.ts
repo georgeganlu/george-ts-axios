@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from '../types'
-import { bindURL, isUrlSearchParams } from '../helpers/url'
-import { isPlainObject, deepMerge } from '../helpers/util'
+import { bindURL, isAbsoluteUrl, combinUrl } from '../helpers/url'
+import { isPlainObject } from '../helpers/util'
 import { processHeaders, deepMergeHeader } from '../helpers/headers'
 import transform from './transform'
 
@@ -37,7 +37,11 @@ export function processConfig(config: AxiosRequestConfig): void {
 }
 
 export function transformUrl(config: AxiosRequestConfig): string {
-  let { url, params, paramsSerializer } = config // 只是在这里取出params的参数。
+  let { url, params, paramsSerializer, baseUrl } = config // 只是在这里取出params的参数。
+  // 配置baseUrl的关键是基础url, 还有一个点需要看后来传入的url是否是绝对地址。
+  if (baseUrl && !isAbsoluteUrl(url!)) {
+    url = combinUrl(baseUrl, url)
+  }
   return bindURL(url!, params, paramsSerializer) // bindURL只是处理url的形式。
 }
 

@@ -91,3 +91,14 @@ export function resolveUrl(url: string): OriginName {
     host
   }
 }
+
+export function isAbsoluteUrl(baseUrl: string): boolean {
+  return /(^[a-z][a-z\-\+\.]*):\/\//.test(baseUrl)
+}
+
+export function combinUrl(baseUrl: string, relativeUrl?: string): string {
+  let url = relativeUrl
+    ? baseUrl.replace(/\/+$/, '') + '/' + relativeUrl.replace(/^\/+/, '')
+    : baseUrl
+  return url
+}

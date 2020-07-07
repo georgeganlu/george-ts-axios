@@ -65,6 +65,12 @@ function withCredentials(router) {
         res.send(fs.readFileSync(pathTem));
     });
 
+    router.get('/base/url', (req, res) => {
+        res.json({
+            msg: '更新base/url的内容'
+        });
+    });
+
     // router.get('/cookie/xs', (req, res) => {
     //     // let cookie = req.cookies;
     //     // console.log(cookie);
@@ -74,6 +80,7 @@ function withCredentials(router) {
     //     res.cookie('x-xsrf-cookie', 'test-alex');
     //     res.send('asdfasdf');
     // })
+
 }
 
 
