@@ -83,6 +83,8 @@ export interface Axios {
   post<T = any>(url: string, data: any, config?: AxiosRequestConfig): AxiosPromise<T>
   put<T = any>(url: string, data: any, config?: AxiosRequestConfig): AxiosPromise<T>
   patch<T = any>(url: string, data: any, config?: AxiosRequestConfig): AxiosPromise<T> // 打补丁。
+
+  getUrl(config?: AxiosRequestConfig): string
 }
 
 // 实例本身就是一个方法   使用<T = any> 代表这个类型变量可以是任何一种类型，或都不传类型也可以，不然就必须传入一个类型。
@@ -134,6 +136,14 @@ export interface AxiosInstanceStatic extends AxiosInstance {
   CancelToken: CancelTokenStatic
   Cancel: CancelStatic
   isCancel: (value: any) => boolean
+  all<T>(Promise: Array<T | Promise<T>>): Promise<Array<T>>
+
+  spread<T, R>(callback: (...args: T[]) => R): (arr: T[]) => R
+  Axios: AxiosClassStatic
+}
+
+export interface AxiosClassStatic {
+  new (config: AxiosRequestConfig): Axios
 }
 
 // 定义了接口类型，还要进行实现这个接口的类型 。

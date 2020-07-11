@@ -28,4 +28,14 @@ axios.CancelToken = CancelToken // CancelToken类
 axios.Cancel = Cancel
 axios.isCancel = isCancel
 
+axios.all = function(promise) {
+  return Promise.all(promise)
+}
+
+axios.spread = function(callback) {
+  return function warp(arr) {
+    return callback.apply(null, arr)
+  }
+}
+
 export default axios
