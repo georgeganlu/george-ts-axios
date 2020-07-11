@@ -10,7 +10,7 @@ import Cancel, { isCancel } from './cancel/Cancel'
 
 function createInstance(initConfig: AxiosRequestConfig): AxiosInstanceStatic {
   let context = new Axios(initConfig)
-  let instance = Axios.prototype.request.bind(context) // 绑定这个方法执行时的this;
+  let instance = Axios.prototype.request.bind(context) // 绑定这个方法执行时的this;   // 这里instance是一个新的函数。
 
   // 混合对象进行拷贝。
   extend(instance, context)

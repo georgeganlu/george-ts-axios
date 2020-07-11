@@ -39,7 +39,7 @@ loadProgressBar();
 function progressSet(e: ProgressEvent): void {
     let { loaded, total } = e;
     let percent = Percentage(loaded, total);
-    // Nprogress.set(percent);
+    Nprogress.set(percent);
 }
 
 
